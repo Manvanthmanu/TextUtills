@@ -5,10 +5,12 @@ export default function TextForm(props) {
     const [text , setManu] = useState('manu')
     const handlechange = (event) => {
         setManu(event.target.value)
+
     }
     const handleUpClick = () => {
         let newtext = text.toUpperCase();
         setManu(newtext)
+        props.showalert("Converted to UpperCase" , "success")
     }
     const handleLoClick = () => {  
         let newtext = text.toLowerCase();
@@ -22,6 +24,11 @@ export default function TextForm(props) {
         
         navigator.clipboard.writeText(text);
     }
+
+    const removeSpaces = ()=>{
+        let newtext = text.split(/[ ]+/);
+        setManu(newtext.join(" "))
+    }
     return (
         <>
             <div className='container'>
@@ -32,6 +39,7 @@ export default function TextForm(props) {
                     <button style={{marginTop:'10px'}} className="btn btn-success mx-3" onClick={handleLoClick}>Convert to Uppercase</button>
                     <button style={{marginTop:'10px'}} className="btn btn-success " onClick={handleClearClick}>Clear</button>
                     <button style={{marginTop:'10px'}} className="btn btn-success  mx-3 " onClick={handleCopy}>copy</button>
+                    <button style={{marginTop:'10px'}} className="btn btn-success  mx-3 " onClick={removeSpaces}>removeSpaces</button>
                 </div>
             </div>
             <div className="container" style={{marginTop:'10px'}}>
@@ -39,7 +47,7 @@ export default function TextForm(props) {
                 <p>{text.split(" ").length-1} words and {text.length} characters</p>
                 <p>{0.008 * text.split(" ").length} Minutes read</p>
                 <h4>Preview</h4>
-                <p>{text}</p>
+                <p>{text.length===0?'Please enter your text to preview':text}</p>
             </div>
         </>
   )
